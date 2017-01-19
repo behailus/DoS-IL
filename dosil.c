@@ -60,84 +60,6 @@
 #define CURRT() (PCVALID())?tokens[pc]:""
 
 
-//Navigate on the tree
-
-
-/*
-typedef struct {
-    const char *nam;
-    int (*dcall)();
-} dfunc;
-    
-void set_x(int x) {printf("Calling function %i\n",x);}
-void set_y(int val) {printf("Calling function y with %i\n",val);}
-void set_z(int val) {printf("Calling function z with %i \n",val);}
-
-entry_t table[] = {{"set-x", set_x},
-                   {"set-y", set_y},
-                   {"set-z", set_z}};
-
-void parse(const char *cmd, int x)
-{
-    int i=3;
-    while(i--) {
-        if(!strncmp(cmd,table[i].nam,5)) 
-		{            
-			printf("Matched %s\n",cmd);
-            table[i].func(x);
-        }
-    }
-}
-
-int main(int argc, char **argv)
-{
-	char str[10];
-	char ans;
-	int i = 0, j=0;
-	while(i==0)
-	{
-		j++;
-		scanf(" %s",str);
-		printf("%s\n",str);
-		parse(str,j);
-		printf("\nDo You want To Continue?");
-		scanf(" %c",&ans);
-		if(ans == 'N' || ans == 'n')
-			i=1;
-	}
-}
-*/
-//Clean start for the interpreter
-/*
-typedef union
-{
-	void (*vvmethod)(void);
-	void (*vimethod)(int);
-	int  (*ivmethod)(void);
-	int  (*iimethod)(int);	
-}ftype;
-
-typedef struct
-{
-	const char *name;
-	ftype func;
-}functs;
-
-typedef struct
-{
-	const char *name;
-	functs behave[5]; 
-}element;
-
-void sleep()
-{
-	printf("Device sleeping \n");
-}
-
-element domele[] = { "device",{"sleep",sleep}
-	
-					};
-*/
 char *prog = "while(device->ready());"
 				"device->every(12){"
 				"snumber_sid:=4;"
@@ -1218,11 +1140,6 @@ int main()
 	RUNTC();
 	RESET();
 
-	/*updatev("measure","43");
-	updatev("format","12");
-	updatev("eid","2");
-	updatev("aid","3");
-	updatev("sid","4");*/
 	for(int i=0;i<=vr.top;i++)
 	{
 		printf("At %i  => %s\n",vr.rg[i].ind, vr.rg[i].val);
@@ -1231,37 +1148,3 @@ int main()
 
 	return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

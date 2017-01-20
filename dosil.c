@@ -1,6 +1,6 @@
 #include <string.h>
 #include <stdio.h>
-
+#include 'dom.h'
 /*
  * Script -(Has)-> Sections -(Has)->Block*(s)-(Has)->Statement(s)-(Has)->Expression(s)-(Has)->Tokens
  * Section = {Check & Loop} 

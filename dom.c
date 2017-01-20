@@ -105,15 +105,3 @@ dom_t dom_init(void)
 	dom.iexecute = iexecute;
 	return dom;
 }
-
-int main(int argc, char **argv)
-{
-	dom_t dom = dom_init();
-	dom.device.sleep();
-	rotate(80);
-	char* tos[]={"device","every","12"};
-	char retn[100];
-	dom.iexecute(dom.device,3,tos,retn);
-	printf("\nReturned: %s\n",retn);
-	return 0;
-}

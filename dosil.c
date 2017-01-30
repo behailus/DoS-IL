@@ -1173,11 +1173,5 @@ int main()
 	RUNTC();
 	RESET();
 
-	for(int i=0;i<=vr.top;i++)
-	{
-		printf("At %i  => %s\n",vr.rg[i].ind, vr.rg[i].val);
-	}
-	pc = 40;
-
 	return 0;
 }

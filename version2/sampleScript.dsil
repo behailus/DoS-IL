@@ -1,0 +1,46 @@
+! This is a simple script that interacts 
+! with a second device 
+version 5 ! version of the script 
+! Optional comment 
+thermo : include "thermostat.td" ! imported thing description 
+dom : include "aircondition.td" ! the device that runs this script 
+
+! Initialization block 
+init
+{
+    dom.write(unit, "rpm");
+    dom.write(fanspeed, 0);
+}
+! Condition for running the loop contineously 
+dom.every(12); ! or while(dom.read(state)); 
+run{
+    temp = thermo.read(temperature); ! Get the temperature 
+    dom.write(temperature, temp); ! Assign it to local property 
+    unt =  thermo.read(unit); ! Read the unit it uses 
+    if(unt == "c") ! Degree celecius 
+    {
+        if(temp > 25) ! compare it to a constant 
+        {
+            dom.write(fanspeed, 10); ! Update the fanspeed value 
+        }
+        else
+        {
+            dom.write(fanspeed, 0); ! or stop the fan 
+        }
+
+    }
+    else
+    {
+        if(temp > 90)
+        {
+            dom.write(fanspeed, 10);
+        }
+        else
+        {
+            dom.write(fanspeed, 0);
+        }
+        
+    }
+    dom.sync();
+}
+!end of script

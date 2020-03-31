@@ -1,0 +1,161 @@
+import $AS_GLOBAL_PATH/families/IndirectInvocationFam.acme;
+ 
+import $AS_GLOBAL_PATH/families/DataflowFam.acme;
+ 
+import $AS_GLOBAL_PATH/families/RepositoryFam.acme;
+ 
+import $AS_GLOBAL_PATH/families/ClientServerFam.acme;
+ 
+import $AS_GLOBAL_PATH/families/LocalCallReturnFam.acme;
+ 
+import $AS_GLOBAL_PATH/families/CallReturnFam.acme;
+ 
+import $AS_GLOBAL_PATH/families/PubSubFam.acme;
+ 
+import $AS_GLOBAL_PATH/families/RemoteCallReturnFam.acme;
+ 
+import $AS_GLOBAL_PATH/families/BatchSequentialFam.acme;
+ 
+import $AS_GLOBAL_PATH/families/PipeAndFilter.acme;
+ 
+import $AS_GLOBAL_PATH/families/EventBasedFam.acme;
+ 
+import families/PIStyle.acme;
+ 
+Family PIStyle extends IndirectInvocationFam, DataflowFam, RepositoryFam, ClientServerFam, LocalCallReturnFam, CallReturnFam, PubSubFam, RemoteCallReturnFam, BatchSequentialFam, PipeAndFilterFam, EventBasedFam with {
+
+    Property Type Ownership = Enum {PrivateOwned,PublicOwned,Business};
+    Property Type RealTimeNeed = Enum {Hard,Soft,None};
+    Property Type IoTDomain = string;
+    Port Type replication extends ResponsePortT, RequestPortT with {
+
+    }
+    Port Type uniformClientPort extends SubscribePortT, PublishPortT, ClientPortT with {
+
+        Property maxPayload : int;
+
+    }
+    Port Type uniformServerPort extends SubscribePortT, ServerPortT, PublishPortT with {
+
+    }
+    Component Type EmbeddedComponent extends ClientCompT, SubscriberCompT, PublisherCompT with {
+
+        Property IsMobile : boolean;
+
+        Property ThingDescription : string <<  default : string = ""; >> ;
+
+        Property PercentActivityTime : float;
+
+        Property StreamingData : boolean <<  default : boolean = false; >> ;
+
+        Property AveragePowerPerActivity : float;
+
+        Property IsBatteryPowered : boolean <<  default : boolean; >> ;
+
+    }
+    Component Type FogComponent extends PublisherCompT, ServerCompT, ClientCompT, SubscriberCompT with {
+        Port peerReplicate : PIStyle.replication = new PIStyle.replication extended with {
+
+        }
+
+        Property MaxThingNodes : int <<  default : int = 100; >> ;
+
+        Property MaxNeighbours : int <<  default : int = 6; >> ;
+
+        Property MaximumLatency : float;
+
+    }
+    Component Type BackendComponent extends SubscriberCompT, PublisherCompT, ServerCompT with {
+
+        Property IsPublicCloud : boolean <<  default : boolean = true; >> ;
+
+    }
+    Component Type UserInteractionComponent extends ClientCompT with {
+
+        Property ReadOnlyClient : boolean <<  default : boolean = false; >> ;
+
+    }
+    Component Type ActuatorComponent extends SubscriberCompT with {
+
+    }
+    Component Type SensorComponent extends PublisherCompT with {
+
+        Property thresholdValue : float <<  default : float = 0; >> ;
+
+    }
+    Component Type DomComponent extends PublisherCompT, SubscriberCompT, ResponderCompT with {
+        Port apiPort : ResponsePortT = new ResponsePortT extended with {
+
+        }
+
+        Property domVersion : int <<  default : int = 0; >> ;
+
+    }
+    Component Type ResourceBrowserComponent extends CallerCompT with {
+        Port domCall : RequestPortT = new RequestPortT extended with {
+
+        }
+        Port serverCall : uniformClientPort = new uniformClientPort extended with {
+
+        }
+
+        Property scriptVersion : int;
+
+    }
+    Component Type ScriptRunner extends ClientCompT, CallerCompT with {
+        Port domRequest : CallReturnFam.RequestPortT = new CallReturnFam.RequestPortT extended with {
+
+        }
+
+    }
+    Component Type DigitalTwin extends PublisherCompT, SubscriberCompT with {
+
+    }
+    Component Type LocalStore extends RepositoryCompT with {
+
+        Property maxSize : int;
+
+    }
+    Component Type LocalServices extends DataAccessorCompT, SubscriberCompT, PublisherCompT with {
+
+    }
+    Role Type uniformInterfaceClient extends PublisherRoleT, ClientRoleT, SubscriberRoleT with {
+
+    }
+    Role Type uniformInterfaceServer extends SubscriberRoleT, ServerRoleT, PublisherRoleT with {
+
+    }
+    Connector Type RestfulConnector extends ClientServerConnT with {
+
+    }
+    Connector Type UniformPIConnector = {
+        Role clientRole : uniformInterfaceClient = new uniformInterfaceClient extended with {
+
+        }
+        Role serverRole : uniformInterfaceServer = new uniformInterfaceServer extended with {
+
+        }
+
+        Property NtkProtocol : string;
+
+    }
+    Connector Type ReplicationConnector extends CallReturnConnT with {
+        Role peer1 : ResponderRoleT, CallerRoleT = new CallerRoleT, ResponderRoleT extended with {
+
+        }
+        Role peer2 : CallerRoleT, ResponderRoleT = new CallerRoleT, ResponderRoleT extended with {
+
+        }
+
+    }
+    Connector Type DataAccess extends DataAccessConnT with {
+
+    }
+
+    Property AppDomain : PIStyle.IoTDomain;
+
+    Property SystemOwnership : PIStyle.Ownership;
+
+    Property RealTimeRequirement : PIStyle.RealTimeNeed;
+}
+

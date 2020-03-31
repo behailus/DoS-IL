@@ -1,0 +1,337 @@
+import families/PIStyle.acme;
+ 
+System SmartHomeSystem : PIStyle = new PIStyle extended with {
+
+    Component UserInteractionComponent0 : UserInteractionComponent = new UserInteractionComponent extended with {
+        Port call : ClientPortT = new ClientPortT extended with {
+
+        }
+
+    }
+    Component FogComponent0 : FogComponent = new FogComponent extended with {
+        Port call : ClientPortT = new ClientPortT extended with {
+
+        }
+        Port servient : PIStyle.uniformServerPort = new PIStyle.uniformServerPort extended with {
+
+        }
+        Port uniformServerPort0 : uniformServerPort = new uniformServerPort extended with {
+
+        }
+
+        Property MaximumLatency = 2000.0;
+        Representation FogComponent0_Rep = {
+            System FogComponent0_Rep : PIStyle = new PIStyle extended with {
+
+                Component LocalStore0 : LocalStore = new LocalStore extended with {
+                    Port data : RepositoryPortT = new RepositoryPortT extended with {
+
+                    }
+                    Port data0 : RepositoryPortT = new RepositoryPortT extended with {
+
+                    }
+
+                }
+                Component DigitalTwin0 : DigitalTwin = new DigitalTwin extended with {
+                    Port receive : SubscribePortT = new SubscribePortT extended with {
+
+                    }
+                    Port publish : PublishPortT = new PublishPortT extended with {
+
+                    }
+                    Port uniformServerPort0 : uniformServerPort = new uniformServerPort extended with {
+
+                    }
+
+                }
+                Component DigitalTwin1 : DigitalTwin = new DigitalTwin extended with {
+                    Port receive : SubscribePortT = new SubscribePortT extended with {
+
+                    }
+                    Port publish : PublishPortT = new PublishPortT extended with {
+
+                    }
+                    Port uniformServerPort0 : uniformServerPort = new uniformServerPort extended with {
+
+                    }
+
+                }
+                Component LocalServices0 : LocalServices = new LocalServices extended with {
+                    Port receive : SubscribePortT = new SubscribePortT extended with {
+
+                    }
+                    Port access : DataAccessorPortT = new DataAccessorPortT extended with {
+
+                    }
+                    Port publish : PublishPortT = new PublishPortT extended with {
+
+                    }
+                    Port replication0 : replication = new replication extended with {
+
+                    }
+                    Port ClientPortT0 : ClientPortT = new ClientPortT extended with {
+
+                    }
+
+                }
+                Connector EventBusConnT0 : EventBusConnT = new EventBusConnT extended with {
+                    Role PublisherRoleT1 : PublisherRoleT = new PublisherRoleT extended with {
+
+                    }
+                    Role PublisherRoleT2 : PublisherRoleT = new PublisherRoleT extended with {
+
+                    }
+                    Role SubscriberRoleT0 : SubscriberRoleT = new SubscriberRoleT extended with {
+
+                    }
+                    Role SubscriberRoleT1 : SubscriberRoleT = new SubscriberRoleT extended with {
+
+                    }
+                    Role RepositoryRole0 : RepositoryRoleT = new RepositoryRoleT extended with {
+
+                    }
+                    Role PublisherRoleT0 : PublisherRoleT = new PublisherRoleT extended with {
+
+                    }
+                    Role SubscriberRoleT2 : SubscriberRoleT = new SubscriberRoleT extended with {
+
+                    }
+
+                }
+                Connector DataAccess0 : DataAccess = new DataAccess extended with {
+                    Role access : DataAccessorRoleT = new DataAccessorRoleT extended with {
+
+                    }
+                    Role repository : RepositoryRoleT = new RepositoryRoleT extended with {
+
+                    }
+
+                }
+                Attachment DigitalTwin1.publish to EventBusConnT0.PublisherRoleT1;
+                Attachment DigitalTwin0.publish to EventBusConnT0.PublisherRoleT2;
+                Attachment DigitalTwin0.receive to EventBusConnT0.SubscriberRoleT0;
+                Attachment DigitalTwin1.receive to EventBusConnT0.SubscriberRoleT1;
+                Attachment LocalStore0.data to EventBusConnT0.RepositoryRole0;
+                Attachment LocalServices0.publish to EventBusConnT0.PublisherRoleT0;
+                Attachment LocalServices0.receive to EventBusConnT0.SubscriberRoleT2;
+                Attachment LocalServices0.access to DataAccess0.access;
+                Attachment LocalStore0.data0 to DataAccess0.repository;
+            }
+
+
+            Bindings {
+                call to LocalServices0.replication0;
+                peerReplicate to LocalServices0.ClientPortT0;
+            }
+        }
+
+    }
+    Component BackendComponent0 : BackendComponent = new BackendComponent extended with {
+        Port server : ClientServerFam.ServerPortT = new ClientServerFam.ServerPortT extended with {
+
+        }
+        Port servient : PIStyle.uniformServerPort = new PIStyle.uniformServerPort extended with {
+
+        }
+        Port ServerPortT0 : ServerPortT = new ServerPortT extended with {
+
+        }
+        Port ServerPortT1 : ServerPortT = new ServerPortT extended with {
+
+        }
+
+    }
+    Component EmbeddedComponent0 : EmbeddedComponent = new EmbeddedComponent extended with {
+        Port client : PIStyle.uniformClientPort = new PIStyle.uniformClientPort extended with {
+
+        }
+
+        Property IsBatteryPowered = true;
+
+        Property AveragePowerPerActivity = 1.2000000476837158;
+
+        Property IsMobile = true;
+
+        Property PercentActivityTime = 0.019999999552965164;
+        Representation EmbeddedComponent0_Rep = {
+            System EmbeddedComponent0_Rep : PIStyle = new PIStyle extended with {
+
+                Component SensorComponent0 : SensorComponent = new SensorComponent extended with {
+                    Port publish : PublishPortT = new PublishPortT extended with {
+
+                    }
+
+                }
+                Component ActuatorComponent0 : ActuatorComponent = new ActuatorComponent extended with {
+                    Port receive : SubscribePortT = new SubscribePortT extended with {
+
+                    }
+
+                }
+                Component DomComponent0 : DomComponent = new DomComponent extended with {
+                    Port receive : SubscribePortT = new SubscribePortT extended with {
+
+                    }
+                    Port publish : PublishPortT = new PublishPortT extended with {
+
+                    }
+
+                }
+                Component ResourceBrowserComponent0 : ResourceBrowserComponent = new ResourceBrowserComponent extended with {
+                    Representation ResourceBrowserComponent0_Rep = {
+                        System ResourceBrowserComponent0_Rep : PIStyle = new PIStyle extended with {
+
+                            Component ScriptRunner0 : ScriptRunner = new ScriptRunner extended with {
+                                Port call : ClientPortT = new ClientPortT extended with {
+
+                                }
+
+                            }
+                        }
+
+
+                        Bindings {
+                            domCall to ScriptRunner0.domRequest;
+                            serverCall to ScriptRunner0.call;
+                        }
+                    }
+
+                }
+                Connector EventBusConnT0 : EventBusConnT = new EventBusConnT extended with {
+                    Role SubscriberRoleT0 : SubscriberRoleT = new SubscriberRoleT extended with {
+
+                    }
+                    Role PublisherRoleT0 : PublisherRoleT = new PublisherRoleT extended with {
+
+                    }
+                    Role SubscriberRoleT1 : SubscriberRoleT = new SubscriberRoleT extended with {
+
+                    }
+                    Role PublisherRoleT1 : PublisherRoleT = new PublisherRoleT extended with {
+
+                    }
+
+                }
+                Connector CallReturnConnT0 : CallReturnConnT = new CallReturnConnT extended with {
+                    Role CallerRoleT0 : CallerRoleT = new CallerRoleT extended with {
+
+                    }
+                    Role ResponderRoleT0 : ResponderRoleT = new ResponderRoleT extended with {
+
+                    }
+
+                }
+                Attachment ActuatorComponent0.receive to EventBusConnT0.SubscriberRoleT0;
+                Attachment SensorComponent0.publish to EventBusConnT0.PublisherRoleT0;
+                Attachment DomComponent0.receive to EventBusConnT0.SubscriberRoleT1;
+                Attachment DomComponent0.publish to EventBusConnT0.PublisherRoleT1;
+                Attachment ResourceBrowserComponent0.domCall to CallReturnConnT0.CallerRoleT0;
+                Attachment DomComponent0.apiPort to CallReturnConnT0.ResponderRoleT0;
+            }
+
+
+            Bindings {
+                client to ResourceBrowserComponent0.serverCall;
+            }
+        }
+
+    }
+    Component FogComponent1 : FogComponent = new FogComponent extended with {
+        Port call : ClientPortT = new ClientPortT extended with {
+
+        }
+        Port servient : PIStyle.uniformServerPort = new PIStyle.uniformServerPort extended with {
+
+        }
+
+    }
+    Component EmbeddedComponent1 : EmbeddedComponent = new EmbeddedComponent extended with {
+        Port client : PIStyle.uniformClientPort = new PIStyle.uniformClientPort extended with {
+
+        }
+
+        Property IsBatteryPowered = true;
+
+    }
+    Component EmbeddedComponent2 : EmbeddedComponent = new EmbeddedComponent extended with {
+        Port client : PIStyle.uniformClientPort = new PIStyle.uniformClientPort extended with {
+
+        }
+
+    }
+    Component EmbeddedComponent3 : EmbeddedComponent = new EmbeddedComponent extended with {
+        Port client : PIStyle.uniformClientPort = new PIStyle.uniformClientPort extended with {
+
+        }
+
+    }
+    Connector RestfulConnector0 : RestfulConnector = new RestfulConnector extended with {
+        Role server : ServerRoleT = new ServerRoleT extended with {
+
+        }
+        Role client : ClientRoleT = new ClientRoleT extended with {
+
+        }
+
+    }
+    Connector RestfulConnector1 : RestfulConnector = new RestfulConnector extended with {
+        Role server : ServerRoleT = new ServerRoleT extended with {
+
+        }
+        Role client : ClientRoleT = new ClientRoleT extended with {
+
+        }
+
+    }
+    Connector UniformPIConnector0 : UniformPIConnector = new UniformPIConnector extended with {
+
+        Property NtkProtocol = "BLE";
+
+    }
+    Connector ReplicationConnector0 : ReplicationConnector = new ReplicationConnector extended with {
+
+    }
+    Connector UniformPIConnector1 : UniformPIConnector = new UniformPIConnector extended with {
+
+        Property NtkProtocol = "NBIoT";
+
+    }
+    Connector RestfulConnector2 : RestfulConnector = new RestfulConnector extended with {
+        Role server : ServerRoleT = new ServerRoleT extended with {
+
+        }
+        Role client : ClientRoleT = new ClientRoleT extended with {
+
+        }
+
+    }
+    Connector UniformPIConnector2 : UniformPIConnector = new UniformPIConnector extended with {
+
+    }
+    Connector UniformPIConnector3 : UniformPIConnector = new UniformPIConnector extended with {
+
+    }
+    Attachment UserInteractionComponent0.call to RestfulConnector0.client;
+    Attachment FogComponent0.call to RestfulConnector1.client;
+    Attachment BackendComponent0.server to RestfulConnector0.server;
+    Attachment EmbeddedComponent0.client to UniformPIConnector0.clientRole;
+    Attachment FogComponent0.servient to UniformPIConnector0.serverRole;
+    Attachment FogComponent1.peerReplicate to ReplicationConnector0.peer2;
+    Attachment FogComponent0.peerReplicate to ReplicationConnector0.peer1;
+    Attachment EmbeddedComponent1.client to UniformPIConnector1.clientRole;
+    Attachment FogComponent1.servient to UniformPIConnector1.serverRole;
+    Attachment FogComponent1.call to RestfulConnector2.client;
+    Attachment BackendComponent0.servient to UniformPIConnector2.serverRole;
+    Attachment EmbeddedComponent2.client to UniformPIConnector2.clientRole;
+    Attachment EmbeddedComponent3.client to UniformPIConnector3.clientRole;
+    Attachment BackendComponent0.ServerPortT1 to RestfulConnector1.server;
+    Attachment BackendComponent0.ServerPortT0 to RestfulConnector2.server;
+    Attachment FogComponent0.uniformServerPort0 to UniformPIConnector3.serverRole;
+
+    Property RealTimeRequirement = Soft;
+
+    Property SystemOwnership = PrivateOwned;
+
+    Property AppDomain = "Smart Home";
+}
+
